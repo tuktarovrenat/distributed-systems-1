@@ -1,19 +1,19 @@
 jobs:
   include:
-  # - stage: backend testing
-  #   language: node_js
-  #   node_js:
-  #     - "node"
-  #   env:
-  #     - NODE_ENV=development
-  #   install:
-  #     - cd backend
-  #     - npm install
-  #     - cd ..
-  #   script:
-  #     - cd backend
-  #     - npm test
-  #     - cd ..
+  - stage: backend testing
+    language: node_js
+    node_js:
+      - "node"
+    env:
+      - NODE_ENV=development
+    install:
+      - cd backend
+      - npm install
+      - cd ..
+    script:
+      - cd backend
+      - npm test
+      - cd ..
 
   - stage: backend deployment
     language: node_js
