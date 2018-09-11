@@ -6,7 +6,7 @@ const run = async function(port) {
   routes.setup(server);
 
   try {
-    await server.listen(port)
+    await server.listen(port, '0.0.0.0');
     console.log('server is listening at: ' + port);
   } catch (err) {
     console.error('failed to listen on port: ' + port);
