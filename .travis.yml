@@ -1,0 +1,52 @@
+jobs:
+  include:
+  - stage: backend testing
+    language: node_js
+    node_js:
+      - "node"
+    services:
+      - postgresql
+    env:
+      - NODE_ENV=development
+    install:
+      - cd backend
+      - npm install
+      - cd ..
+    before_script:
+      - psql -c 'drop database if exists "distributed-systems-test"' -U postgres
+      - psql -c 'create database "distributed-systems-test"' -U postgres
+    script:
+      - cd backend
+      - npm test
+      - cd ..
+
+  - stage: backend staging deployment
+    language: node_js
+    node_js:
+      - "node"
+    script: skip
+    env:
+      - NODE_ENV=development
+    before_deploy:
+      - cd backend
+    deploy:
+      provider: heroku
+      api_key: '4109f1e0-54db-4d7e-8cad-7397329ab92c'
+      app: ds-backend-staging
+
+  - stage: frontend staging deployment
+    language: node_js
+    node_js:
+      - "node"
+    install:
+      - cd frontend
+      - npm install
+      - cd ..
+    script: skip
+    before_deploy:
+      - cd frontend
+      - npm run build
+    deploy:
+      provider: 'heroku'
+      api_key: '4109f1e0-54db-4d7e-8cad-7397329ab92c'
+      app: ds-frontend-staging
